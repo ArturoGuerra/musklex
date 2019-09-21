@@ -1,9 +1,10 @@
 FROM python:3-buster
 
 WORKDIR /app
-RUN apt install -y cffi libffi-dev
+RUN apt update && apt install -y ffmpeg libffi-dev
 
-COPY Pipfile* /tmp
+COPY Pipfile* /tmp/
+RUN pip install pipenv
 RUN cd /tmp && pipenv lock --requirements > requirements.txt
 RUN pip install -r /tmp/requirements.txt
 COPY . .
